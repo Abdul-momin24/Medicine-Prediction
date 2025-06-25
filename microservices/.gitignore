@@ -1,0 +1,34 @@
+# Python environment
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+env/
+venv/
+newenv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VSCode settings (if using)
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+6
+# Data and models (optional: only if they're large or auto-generated)
+data/
+model/
+
+# Logs or outputs
+*.log
+
+# Secrets or sensitive config files (if applicable)
+*.env
+.env
