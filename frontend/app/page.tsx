@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { HeartPulse, Dumbbell, Leaf, Shield } from "lucide-react";
 import Fuse from "fuse.js";
+import axios from "axios";
 
 const knownSymptoms = [
   "itching", "skin_rash", "nodal_skin_eruptions", "continuous_sneezing", "shivering",
@@ -72,19 +73,16 @@ export default function Home() {
 
     setLoading(true);
     setData(null);
+    try{
+      const res = await axios.post("http://localhost:4000/a", {symptoms})
+      
+      setData(res?.data);
 
-    // Replace with actual backend call
-    setTimeout(() => {
-      setData({
-        disease: "Diabetes Type II",
-        description: "A chronic condition that affects the way the body processes blood sugar.",
-        workout: "Light cardio 30 mins daily, yoga, and resistance training",
-        diet: "High fiber, low sugar, whole grains, and lean proteins",
-        precaution: "Regular blood sugar checks, avoid sugary food, stay hydrated",
-      });
-      setLoading(false);
-    }, 1000);
-  };
+      setLoading(false)
+          }catch(err){
+      console.log(err)
+    }
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -114,7 +112,7 @@ export default function Home() {
                     onClick={() => handleSuggestionClick(s.input, s.suggestion)}
                     className=" hover:text-blue-700 transition"
                   >
-                    {s.input} → {s.suggestion}
+                    {s.suggestion}
                   </button>
                 </li>
               ))}

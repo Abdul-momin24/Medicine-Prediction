@@ -76,7 +76,7 @@ app = Flask(__name__)
 def predict():
     if request.method == "POST":
         print("request aagyi")
-        symptoms = request.form.get('symptoms')
+        symptoms = request.json.get('symptoms')
         print("symptoms==========\n", symptoms)
         user_symptoms = [s.strip() for s in symptoms.split(',')]
 
@@ -101,8 +101,6 @@ def predict():
 
         # this will cause error as we cant jsonify fataframe we need strings to get dataframe as there willl be some data which is not series this will causse error
         content =jsonify(data)
-
-        print(content)
         return content
 
     
