@@ -21,6 +21,8 @@ const userSchema = new Schema<Iuser>({
 })
 
 // this will not work on arrow function as this will not be able to refer to the document
+
+
 userSchema.pre('save', async function (next){
     if(this.isModified("password")){
         this.password = await bcrypt.hash(this.password,10);
