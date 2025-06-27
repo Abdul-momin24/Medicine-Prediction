@@ -24,6 +24,7 @@ export const authOptions: NextAuthOptions ={
 
                 try{
                     await connectToDb();
+                    console.log(credentials)
 
                     const user = await User.findOne({email: credentials.email});
 
@@ -38,7 +39,7 @@ export const authOptions: NextAuthOptions ={
                     if(!isValid){
                         throw new Error("Inavlid email OR password")
                     }
-
+                        console.log("data us here sb kch shi hai")
                     // jo return karenge uska session banega 
                     // or ye next auth ka return hota hsi
                     return {
@@ -46,6 +47,7 @@ export const authOptions: NextAuthOptions ={
                     }
 
                 }catch(error){
+
                     console.error("Auth error",error)
                     throw error
                 }
@@ -88,7 +90,7 @@ export const authOptions: NextAuthOptions ={
 
 
 
-    
+
     pages:{
         signIn:"/login",
         error:"/login",

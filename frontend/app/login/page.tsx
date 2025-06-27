@@ -1,19 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useRef, useState } from 'react'
 
-export default function AuthPage() {
+export default function  AuthPage()  {
   const [isLogin, setIsLogin] = useState(true)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
   })
+  const [loading, setLoading] = useState(false)
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
 
   const toggleMode = () => {
     setIsLogin(!isLogin)
     setFormData({ name: '', email: '', password: '' })
   }
+  const router = useRouter()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -22,16 +27,33 @@ export default function AuthPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const endpoint = isLogin ? '/api/login' : '/api/signup'
 
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+    if (loading) return // Prevent double submit
+    if (debounceTimeout.current) return // Debounce: ignore if within debounce period
+    setLoading(true)
+
+
+    debounceTimeout.current = setTimeout(() => {
+      debounceTimeout.current = null
+    }, 1000) // 1 second debounce
+
+
+    console.log("result se pehle")
+    const result = await signIn("credentials",{
+      email: formData.email,
+      password: formData.password,
+      redirect:false
     })
 
-    const data = await res.json()
-    alert(data.message)
+
+    console.log(result)
+
+
+    if(result?.error){
+      console.log(result.error)
+    }else{
+      router.push("/")
+    }
   }
 
   return (
@@ -72,9 +94,10 @@ export default function AuthPage() {
           />
           <button
             type="submit"
-            className="w-full py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700"
+            className="w-full py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
+            disabled={loading}
           >
-            {isLogin ? 'Login' : 'Sign Up'}
+            {loading ? 'Loading...' : isLogin ? 'Login' : 'Sign Up'}
           </button>
         </form>
 
@@ -84,6 +107,7 @@ export default function AuthPage() {
             type="button"
             onClick={toggleMode}
             className="font-medium text-blue-600 hover:underline"
+            disabled={loading}
           >
             {isLogin ? 'Sign Up' : 'Login'}
           </button>

@@ -35,7 +35,7 @@ userSchema.pre('save', async function (next){
 
 // Saying ki pehle ye server pr hai to wo laa do nahi to naya usser Schema bana do
 
-const User = models?.User || model<Iuser>("user", userSchema)
+const User = models?.User || model<Iuser>("User", userSchema)
 
 
 export default User

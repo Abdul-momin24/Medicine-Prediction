@@ -5,7 +5,7 @@
 
 import User from "@/app/models/User";
 import { connectToDb } from "@/lib/mongodb";
-import { connect } from "http2";
+
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -15,8 +15,7 @@ export async function POST(request : NextRequest) {
 
     try{
         // Next js data take time while coming
-        
-        const {email, password} = await  request.json()
+        const {email, password} = await request.json()
 
         if(!email || !password){
             return NextResponse.json(
