@@ -39,8 +39,7 @@ export const authOptions: NextAuthOptions ={
                     if(!isValid){
                         throw new Error("Inavlid email OR password")
                     }
-                        console.log("data us here sb kch shi hai")
-                    // jo return karenge uska session banega 
+                    
                     // or ye next auth ka return hota hsi
                     return {
                         id: user?._id.toString(),
@@ -67,12 +66,11 @@ export const authOptions: NextAuthOptions ={
 
             return token
         },
+
         async session({user,session,token}){
 
             if(session.user){
                 // ession mein user hai he usme humne id ka acess or de doiua
-
-                console.log(session.user)
 
                 session.user.id = token.id as string; 
             }
@@ -82,7 +80,10 @@ export const authOptions: NextAuthOptions ={
         },
 
         async redirect({url,baseUrl}){
-            return baseUrl
+            if (url.startsWith(baseUrl)) {
+                return url; // Safe to redirect to this url
+              }
+              return baseUrl;
         }
     },
     // Yahan pr batana hai kaha se chize aayengi idhr documentation mein nahi diya hua hai

@@ -1,8 +1,11 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
-
+import { getServerSession } from "next-auth";
 
 export async function  POST(request:NextRequest) {
+
+
+    
     const body = await request.json();
     console.log(request)
     console.log(body);

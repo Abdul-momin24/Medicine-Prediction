@@ -17,8 +17,7 @@ export default withAuth({
             }
 
         // sb
-        
-        if(pathname === "/") return true
+
 
 
       return !!token;
