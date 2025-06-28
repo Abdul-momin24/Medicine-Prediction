@@ -1,4 +1,4 @@
-from  flask import Flask, render_template, request, jsonify
+from  flask import Flask, request, jsonify
 import numpy as np
 
 import pandas as pd
@@ -77,7 +77,6 @@ def predict():
     if request.method == "POST":
         print("request aagyi")
         symptoms = request.json.get('symptoms')
-        print("symptoms==========\n", symptoms)
         user_symptoms = [s.strip() for s in symptoms.split(',')]
 
         # Remove extra charaacter

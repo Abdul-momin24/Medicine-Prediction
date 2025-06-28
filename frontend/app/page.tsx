@@ -74,7 +74,7 @@ export default function Home() {
     setLoading(true);
     setData(null);
     try{
-      const res = await axios.post("http://localhost:4000/a", {symptoms})
+      const res = await axios.post("/api/proxy", {symptoms})
       
       setData(res?.data);
 

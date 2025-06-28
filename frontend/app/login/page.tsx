@@ -50,9 +50,11 @@ export default function  AuthPage()  {
 
 
     if(result?.error){
+      setLoading(false)
       console.log(result.error)
     }else{
       router.push("/")
+      // setLoading(false)
     }
   }
 
